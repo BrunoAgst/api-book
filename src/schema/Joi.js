@@ -10,4 +10,11 @@ const BookCreateRequest = Joi.object({
     inventory: Joi.number().required()
 })
 
-module.exports = { BookCreateRequest }
+const BookPatchRequest = Joi.object({
+    name: Joi.string().required(),
+    description: Joi.string().required(),
+    author: Joi.string().required(),
+    inventory: Joi.number().required()
+})
+
+module.exports = { BookCreateRequest, BookPatchRequest }

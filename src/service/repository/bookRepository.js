@@ -31,6 +31,21 @@ class BookRepository {
             throw new Error({ error: error.message })
         }
     }
+
+    async patchBook(sbn, payload) {
+        try {
+            const { name, description, author, inventory } = payload
+
+            let book = await bookSchema.findOneAndUpdate({ sbn }, { name, description, author, inventory })
+
+            if(!book) return { status: 404, error: 'Book not found' }
+
+            return 'ok'
+            
+        } catch (error) {
+            throw new Error({ error: error.message })
+        }
+    }
 }
 
 module.exports = BookRepository
