@@ -65,6 +65,122 @@ describe('#Controller', () => {
         })
     })
 
+    describe('bookGetDetails', () => {
+        beforeEach(() => {
+            _jest.clearAllMocks()
+        })
+
+        test('should return one book', async () => {
+            const request = {
+                sbn: "123"
+            }
+
+            const response = {
+                status: _jest.fn(),
+                json: _jest.fn()
+            }
+
+
+            _jest.spyOn(
+                BookRepository.prototype,
+                'getBookDetails'
+            ).mockResolvedValue([])
+            
+
+            const result = await Controller.bookGetDetails(request, response)
+            expect(response.json).toHaveBeenCalled()
+            expect(result).toBeUndefined()
+        })
+
+        test('should return book return error', async () => {
+            const request = {
+                sbn: "123"
+            }
+
+            const response = {
+                status: _jest.fn(),
+                json: _jest.fn()
+            }
+
+
+            _jest.spyOn(
+                BookRepository.prototype,
+                'getBookDetails'
+            ).mockRejectedValue()
+            
+
+            const result = await Controller.bookGetDetails(request, response)
+            expect(response.status).toHaveBeenCalled()
+            expect(response.json).toHaveBeenCalled()
+            expect(result).toBeUndefined()
+        })
+    })
+
+    describe('bookPatch', () => {
+        beforeEach(() => {
+            _jest.clearAllMocks()
+        })
+
+        test('should update book', async () => {
+            const request = {
+                sbn: "123",
+                body: {
+                    "sbn": "1236565udafadd444d",
+                    "name": "mario bros volume 3",
+                    "description": "game",
+                    "author": "nintendo",
+                    "inventory": 10
+                }
+            }
+
+            const response = {
+                status: _jest.fn(),
+                json: _jest.fn()
+            }
+
+
+            _jest.spyOn(
+                BookRepository.prototype,
+                'patchBook'
+            ).mockResolvedValue([])
+            
+
+            const result = await Controller.bookPatch(request, response)
+            expect(response.json).toHaveBeenCalled()
+            expect(result).toBeUndefined()
+        })
+
+        test('should return update error', async () => {
+            const request = {
+                sbn: "123",
+                body: {
+                    "sbn": "1236565udafadd444d",
+                    "name": "mario bros volume 3",
+                    "description": "game",
+                    "author": "nintendo",
+                    "inventory": 10
+                }
+            }
+
+            const response = {
+                status: _jest.fn(),
+                json: _jest.fn()
+            }
+
+
+            _jest.spyOn(
+                BookRepository.prototype,
+                'patchBook'
+            ).mockRejectedValue()
+            
+
+            const result = await Controller.bookPatch(request, response)
+            expect(response.status).toHaveBeenCalled()
+            expect(response.json).toHaveBeenCalled()
+            expect(result).toBeUndefined()
+        })
+    })
+
     describe('bookGetAll', () => {
         beforeEach(() => {
             _jest.clearAllMocks()
@@ -122,5 +238,55 @@ describe('#Controller', () => {
         })
     })
 
+    describe('bookDelete', () => {
+        beforeEach(() => {
+            _jest.clearAllMocks()
+        })
+
+        test('should delete book', async () => {
+            const request = {
+                sbn: "123"
+            }
+
+            const response = {
+                status: _jest.fn(),
+                json: _jest.fn()
+            }
+
+
+            _jest.spyOn(
+                BookRepository.prototype,
+                'deleteBook'
+            ).mockResolvedValue([])
+            
+
+            const result = await Controller.bookDelete(request, response)
+            expect(response.json).toHaveBeenCalled()
+            expect(result).toBeUndefined()
+        })
+
+        test('should return book error', async () => {
+            const request = {
+                sbn: "123"
+            }
+
+            const response = {
+                status: _jest.fn(),
+                json: _jest.fn()
+            }
+
+
+            _jest.spyOn(
+                BookRepository.prototype,
+                'deleteBook'
+            ).mockRejectedValue()
+            
+
+            const result = await Controller.bookDelete(request, response)
+            expect(response.status).toHaveBeenCalled()
+            expect(response.json).toHaveBeenCalled()
+            expect(result).toBeUndefined()
+        })
+    })
     
 })
