@@ -195,10 +195,82 @@ describe('#BookRepository', () => {
                 BookSchema,
                 'findOne'
             ).mockImplementation(() => { throw new Error('error') })
-            
+
             const bookRepository = new BookRepository()
             const sbn = "1234445"
             const result = await bookRepository.getBookDetails(sbn)
+    
+            expect(result).toBeTruthy()
+        })
+    })
+
+    describe('patchBook', () => {
+
+        beforeEach(() => {
+            _jest.clearAllMocks()
+            _jest.spyOn(
+                BookSchema,
+                'findOneAndUpdate'
+            ).mockResolvedValue({})
+        })
+
+        beforeAll(() => _jest.clearAllMocks())
+
+        test('should patchBook update book', async () => {
+            const sbn = "123"
+            const payload = {
+                "sbn": "1236565udafadd444d",
+                "name": "mario bros volume 3",
+                "description": "game",
+                "author": "nintendo",
+                "inventory": 10
+            }
+
+            const bookRepository = new BookRepository()
+            const result = await bookRepository.patchBook(sbn, payload)
+
+            expect(result).toEqual('ok')
+        })
+
+        test('should patchBook not found', async () => {
+
+            _jest.spyOn(
+                BookSchema,
+                'findOneAndUpdate'
+            ).mockResolvedValue()
+
+            const sbn = "1234"
+            const payload = {
+                "sbn": "1236565udafadd444d",
+                "name": "mario bros volume 3",
+                "description": "game",
+                "author": "nintendo",
+                "inventory": 10
+            }
+
+            const bookRepository = new BookRepository()
+            const result = await bookRepository.patchBook(sbn, payload)
+
+            expect(result).toEqual({status: 404, error: 'Book not found'})
+        })
+
+        test('should patchBook return error', async () => {
+
+            _jest.spyOn(
+                BookSchema,
+                'findOneAndUpdate'
+            ).mockImplementation(() => { throw new Error('error') })
+
+            const bookRepository = new BookRepository()
+            const sbn = "1234445"
+            const payload = {
+                "sbn": "1236565udafadd444d",
+                "name": "mario bros volume 3",
+                "description": "game",
+                "author": "nintendo",
+                "inventory": 10
+            }
+            const result = await bookRepository.patchBook(sbn, payload)
     
             expect(result).toBeTruthy()
         })

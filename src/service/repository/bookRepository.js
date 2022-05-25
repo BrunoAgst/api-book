@@ -52,7 +52,7 @@ class BookRepository {
             return 'ok'
             
         } catch (error) {
-            throw new Error({ error: error.message })
+            return new Error({ error: error.message })
         }
     }
 
