@@ -64,4 +64,63 @@ describe('#Controller', () => {
             expect(result).toBeUndefined()
         })
     })
+
+    describe('bookGetAll', () => {
+        beforeEach(() => {
+            _jest.clearAllMocks()
+        })
+
+        test('should return all books', async () => {
+            const request = {
+                query: {
+                    page: 1,
+                    limit: 10
+                }
+            }
+
+            const response = {
+                status: _jest.fn(),
+                json: _jest.fn()
+            }
+
+
+            _jest.spyOn(
+                BookRepository.prototype,
+                'getBook'
+            ).mockResolvedValue([])
+            
+
+            const result = await Controller.bookGetAll(request, response)
+            expect(response.json).toHaveBeenCalled()
+            expect(result).toBeUndefined()
+        })
+
+        test('should return books return error', async () => {
+            const request = {
+                query: {
+                    page: 1,
+                    limit: 10
+                }
+            }
+
+            const response = {
+                status: _jest.fn(),
+                json: _jest.fn()
+            }
+
+
+            _jest.spyOn(
+                BookRepository.prototype,
+                'getBook'
+            ).mockRejectedValue()
+            
+
+            const result = await Controller.bookGetAll(request, response)
+            expect(response.status).toHaveBeenCalled()
+            expect(response.json).toHaveBeenCalled()
+            expect(result).toBeUndefined()
+        })
+    })
+
+    
 })
