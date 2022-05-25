@@ -276,4 +276,34 @@ describe('#BookRepository', () => {
         })
     })
 
+    describe("deleteBook", () => {
+
+        _jest.spyOn(
+            BookSchema,
+            'findOneAndDelete'
+        ).mockResolvedValue()
+
+        test('should deleteBook return ok', async () => {
+            const bookRepository = new BookRepository()
+            const sbn = "123"
+            const result = await bookRepository.deleteBook(sbn)
+
+            expect(result).toEqual('ok')
+        })
+
+        test('should deleteBook return error', async () => {
+
+            _jest.spyOn(
+                BookSchema,
+                'findOneAndDelete'
+            ).mockImplementation(() => { throw new Error('error') })
+
+            const bookRepository = new BookRepository()
+            const sbn = "1234445"
+            const result = await bookRepository.deleteBook(sbn)
+    
+            expect(result).toBeTruthy()
+        })
+    })
+
 })
