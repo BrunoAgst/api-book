@@ -28,6 +28,20 @@ services:
       - MONGODB_URL=mongodb://mongo:27017/books
     networks:
       - books-network
+  mongo-express:
+    depends_on:
+      - mongo
+    image: mongo-express
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_BASICAUTH_USERNAME: admin
+      ME_CONFIG_BASICAUTH_PASSWORD: admin
+      ME_CONFIG_MONGODB_PORT: 27017
+    links:
+      - mongo
+    networks:
+      - books-network
 networks:
   books-network:
     driver: bridge
