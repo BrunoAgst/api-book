@@ -44,25 +44,13 @@ describe('#BookCleanData', () => {
         
         const expected = [
             {
-              sbn: '123',
               name: 'clean code',
-              description: 'best seller',
-              author: 'robert cecils',
-              inventory: 10
             },
             {
-              sbn: '123444',
               name: 'programacao baixo nivel',
-              description: 'programacao em assembly e c',
-              author: 'igor zhirkov',
-              inventory: 15
             },
             {
-              sbn: '1236565',
               name: 'programacao baixo nivel volume 2',
-              description: 'programacao em assembly e c continuacaqo',
-              author: 'igor zhirkov',
-              inventory: 15
             }
         ]
 

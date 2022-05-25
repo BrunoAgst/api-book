@@ -19,6 +19,12 @@ class BookFactory {
             inventory: this.inventory
         }
     }
+
+    factoryListAll() {
+        return {
+            name: this.name,
+        }
+    }
 }
 
 module.exports = BookFactory

@@ -4,7 +4,9 @@ module.exports = (books) => {
     let booksClean = []
     
     books.forEach(book => {
-        booksClean.push(new bookFactory(book).factory())
+        if(book.inventory > 0) {
+            booksClean.push(new bookFactory(book).factoryListAll())
+        }
     });
 
     return booksClean
