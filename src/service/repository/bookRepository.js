@@ -24,7 +24,7 @@ class BookRepository {
             const salt = (page - 1) * limit
             return await bookSchema.find().skip(salt).limit(limit)
         } catch (error) {
-            throw new Error({ error: error.message })
+            return new Error({ error: error.message })
         }
     }
 
@@ -37,7 +37,7 @@ class BookRepository {
             
             return {book}
         } catch (error) {
-            throw new Error({ error: error.message })
+            return new Error({ error: error.message })
         }
     }
 
