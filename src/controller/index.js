@@ -66,5 +66,20 @@ module.exports = {
             console.log(error)
             response.status(500).json({ error: "Internal Server Error" })
         }
+    },
+
+    bookDelete: async (request, response) => {
+        try {   
+            const sbn = request.params.sbn
+            const bookRepository = new BookRepository()
+
+            await bookRepository.deleteBook(sbn)
+
+            response.json('book deleted success')
+
+        } catch (error) {
+            console.log(error)
+            response.status(500).json({ error: "Internal Server Error" })
+        }
     }
 }

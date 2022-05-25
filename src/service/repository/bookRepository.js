@@ -46,6 +46,16 @@ class BookRepository {
             throw new Error({ error: error.message })
         }
     }
+
+    async deleteBook(sbn) {
+        try {
+            await bookSchema.findOneAndDelete({ sbn })
+
+            return 'ok'
+        } catch (error) {
+            throw new Error({ error: error.message })
+        }
+    }
 }
 
 module.exports = BookRepository
