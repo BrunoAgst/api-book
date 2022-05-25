@@ -19,6 +19,15 @@ class BookRepository {
         }
     }
 
+    async getBook(page, limit) {
+        try {
+            const salt = (page - 1) * limit
+            return await bookSchema.find().skip(salt).limit(limit)
+        } catch (error) {
+            throw new Error({ error: error.message })
+        }
+    }
+
     async getBookDetails(sbn) {
         try {
 

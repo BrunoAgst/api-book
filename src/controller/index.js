@@ -2,6 +2,7 @@
 
 const BookRepository = require('../service/repository/bookRepository')
 const BookFactory = require('../factory/bookFactory')
+const booksCleanData = require('../service/booksCleanData')
 
 module.exports = {
     bookCreate: async (request, response) => {
@@ -17,6 +18,24 @@ module.exports = {
             }
 
             response.json({  message: 'book created successfully' })
+
+        } catch (error) {
+            console.log(error)
+            response.status(500).json({ error: "Internal Server Error" })
+        }
+    },
+
+    bookGetAll: async (request, response) => {
+        try {
+            const { page, limit } = request.query
+
+            const bookRepository = new BookRepository()
+
+            const books = await bookRepository.getBook(page || 1, limit || 10)
+
+            const booksClean = booksCleanData(books)
+
+            response.json(booksClean)
 
         } catch (error) {
             console.log(error)
