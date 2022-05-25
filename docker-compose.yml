@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  mongo:
+    image: mongo
+    container_name: mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_DATABASE=books
+    networks:
+      - books-network
+  api-book-ms:
+    depends_on:
+      - mongo
+    build:
+      context: .
+      target: start
+    container_name: api-book
+    restart: always
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/usr/share/app
+    environment:
+      - PORT=3000
+      - MONGODB_URL=mongodb://mongo:27017/books
+    networks:
+      - books-network
+networks:
+  books-network:
+    driver: bridge
